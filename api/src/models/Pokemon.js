@@ -14,19 +14,19 @@ module.exports = (sequelize) => {
     },
     image: {
       type: DataTypes.STRING,
-      allowNull: false,
+      // allowNull: false,
     },
     hp: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      // allowNull: false,
     },
     attack: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      // allowNull: false,
     },
     defense: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      // allowNull: false,
     },
     speed: {
       type: DataTypes.INTEGER,
@@ -36,6 +36,6 @@ module.exports = (sequelize) => {
     },
     weight: {
       type: DataTypes.INTEGER,
-    },
+    }
   });
 };
