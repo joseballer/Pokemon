@@ -1,15 +1,14 @@
 require("dotenv").config();
 const axios = require("axios");
 const { Pokemon } = require("../db.js");
+const { URL } = process.env;
 
 const getPokemons = async (req, res) => {
   try {
     let pokemons = await Pokemon.findAll();
 
     if (pokemons.length === 0) {
-      const response = await axios.get(
-        "https://pokeapi.co/api/v2/pokemon?limit=1281"
-      );
+      const response = await axios.get(`${URL}?limit=1281`);
       pokemons = response.data.results.map((pokemon) => ({
         name: pokemon.name,
         url: pokemon.url,
@@ -28,9 +27,7 @@ const getPokemonByName = async (req, res) => {
     name.toLowerCase();
     let pokemon = await Pokemon.findOne({ where: { name } });
     if (!pokemon) {
-      const response = await axios.get(
-        `https://pokeapi.co/api/v2/pokemon/${name}`
-      );
+      const response = await axios.get(`${URL}/${name}`);
       pokemon = response.data;
     }
     res.json(pokemon);
@@ -45,9 +42,7 @@ const getPokemonById = async (req, res) => {
     let pokemon = await Pokemon.findByPk(id);
 
     if (!pokemon) {
-      const response = await axios.get(
-        `https://pokeapi.co/api/v2/pokemon/${id}`
-      );
+      const response = await axios.get(`${URL}/${id}`);
       pokemon = response.data;
     }
     res.json(pokemon);
@@ -60,6 +55,7 @@ const createPokemon = async (req, res) => {
   try {
     const { id, name, image, hp, attack, defense, speed, height, weight } =
       req.body;
+    console.log(req.body);
     const newPokemonRes = await Pokemon.create({
       id,
       name,

@@ -1,5 +1,25 @@
 const axios = require("axios");
 const { Type } = require("../db");
+
+const getAllTypes = async (req, res) => {
+  try {
+    let allTypes = await Type.findAll();
+    if (allTypes.length === 0) {
+      const response = await axios.get("https://pokeapi.co/api/v2/type");
+      allTypes = response.data.results.map((type) => ({
+        name: type.name,
+        url: type.url,
+      }));
+      await Type.bulkCreate(allTypes);
+    }
+    res.json(allTypes);
+  } catch (error) {
+    res.status(404).send(error.message);
+  }
+};
+
+module.exports = { getAllTypes };
+
 // const typesLocal = []
 
 // const getAllTypes = async () => {
@@ -18,22 +38,3 @@ const { Type } = require("../db");
 //     throw new Error("Error on get all types:  " + error.message)
 //   }
 // }
-const getAllTypes = async (req, res) => {
-  try {
-    let allTypes = await Type.findAll();
-    if (allTypes.length === 0) {
-      const response = await axios.get(
-        "https://pokeapi.co/api/v2/type"
-      );
-      allTypes = response.data.results.map((type) => ({
-        name: type.name,
-        url: type.url,
-      }));
-    }
-    res.json(allTypes);
-  } catch (error) {
-    res.status(404).send(error.message);
-  }
-};
-
-module.exports = { getAllTypes };
