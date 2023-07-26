@@ -1,17 +1,21 @@
+import "./App.css";
+import { Routes, Route } from "react-router-dom";
+import Landing from "./components/landing/landing";
+import Cards from "./components/cards/Cards";
+import Detail from "./components/detail/Detail";
 
-import './App.css'
-import Landing from './components/landing/landing'
+
 
 function App() {
-  
-
   return (
-    <>
-      <div>
-       <Landing/>
-      </div>
-    </>
-  )
+    <div>
+      <Routes>
+        <Route path="/" element={<Landing />} />
+        <Route path="/home" element={<Cards />} />
+        <Route path="/detail" element={<Detail />} />
+      </Routes>
+    </div>
+  );
 }
 
-export default App
+export default App;
