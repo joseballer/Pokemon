@@ -10,7 +10,7 @@ const router = Router();
 
 router.get("/pokemons", getPokemons);
 router.get("/pokemon", getPokemonByName);
-router.get("/pokemon/:id", getPokemonById);
+router.get("/pokemons/:id", getPokemonById);
 router.get("/types", getAllTypes);
 router.post("/pokemon", createPokemon);
 

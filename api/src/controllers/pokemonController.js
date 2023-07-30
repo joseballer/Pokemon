@@ -1,4 +1,3 @@
-require("dotenv").config();
 const axios = require("axios");
 const { Pokemon } = require("../db.js");
 const { URL } = process.env;
@@ -7,14 +6,44 @@ const getPokemons = async (req, res) => {
   try {
     let pokemons = await Pokemon.findAll();
 
-    if (pokemons.length === 0) {
-      const response = await axios.get(`${URL}?limit=1281`);
-      pokemons = response.data.results.map((pokemon) => ({
-        name: pokemon.name,
-        url: pokemon.url,
-      }));
-    }
+    // Fetch the list of Pokémon from the PokeAPI
+    const response = await axios.get(`${URL}?offset=0&limit=1281`);
+    const pokemonList = response.data.results;
 
+    // Get the page number and page size from the request query parameters
+    const page = parseInt(req.query.page) || 1;
+    const pageSize = 12;
+
+    // Calculate the start and end indices for the current page
+    const startIndex = (page - 1) * pageSize;
+    const endIndex = startIndex + pageSize;
+
+    // Slice the pokemonList array to get only the Pokémon for the current page
+    const paginatedPokemonList = pokemonList.slice(startIndex, endIndex);
+
+    // Create an array of promises to fetch detailed data for each Pokémon on the current page
+    const pokemonPromises = paginatedPokemonList.map((pokemon) =>
+      axios.get(pokemon.url)
+    );
+
+    // Wait for all promises to resolve
+    const pokemonData = await Promise.all(pokemonPromises);
+
+    // Process the data to create an array of Pokémon objects with specific properties
+    const dataPokemonList = pokemonData.map(({ data }) => {
+      const { id, name, sprites, types } = data;
+      return {
+        id,
+        name,
+        image: sprites.other.home.front_default,
+        imageAux: sprites.other.home.front_shiny,
+        types: types.map((type) => {
+          return { id: type.slot, name: type.type.name };
+        }),
+      };
+    });
+
+    pokemons = [...pokemons, dataPokemonList];
     res.json(pokemons);
   } catch (err) {
     res.status(500).send(err.message);

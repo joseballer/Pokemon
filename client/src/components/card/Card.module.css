@@ -1,0 +1,19 @@
+.container {
+    
+    width: 300px;
+    height: auto;
+    background-color: #c5c5c5a2;
+    padding: 1em;
+    border-radius: 10px;
+    margin: 1em;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  
+  .container:hover {
+    background-color: #262623c9;
+    color: beige;
+  }
+  
+ 

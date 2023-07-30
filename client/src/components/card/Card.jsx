@@ -1,9 +1,10 @@
-const Card = (name, types, image) => {
+import style from "./Card.module.css";
+const Card = ({ id, name, image, imageAux, types }) => {
   return (
-    <div>
-      <h2>name</h2>
-      <h2>types</h2>
-      <img src={image} alt="imagen" />
+    <div className={style.container}>
+      <h2>{id}</h2>
+      <img src={image} alt="pokemon" width="200px" height="200px" />
+      <h2>{name}</h2>
     </div>
   );
 };
