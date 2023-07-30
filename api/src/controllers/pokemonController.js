@@ -35,8 +35,9 @@ const getPokemons = async (req, res) => {
       return {
         id,
         name,
-        image: sprites.other.home.front_default,
-        imageAux: sprites.other.home.front_shiny,
+        image:
+          sprites?.other?.home?.front_default ||
+          sprites?.other["official-artwork"]?.front_default,
         types: types.map((type) => {
           return { id: type.slot, name: type.type.name };
         }),
