@@ -5,6 +5,7 @@ import Landing from "./components/landing/landing";
 import Cards from "./components/cards/Cards";
 import Detail from "./components/detail/Detail";
 import Nav from "./components/nav/Nav";
+
 function App() {
   const [pokemons, setPokemons] = useState([]);
   const [page, setPage] = useState(1);
@@ -14,6 +15,16 @@ function App() {
       .get(`http://localhost:3001/pokemons?page=${page}`)
       .then((response) => setPokemons(response.data[0]));
   }, [page]);
+
+  const onSearch = (name) => {
+    axios(`http://localhost:3001/pokemons?name=${name}`)
+      .then(({ data }) => {
+        setPokemons(data);
+      })
+      .catch(() => {
+        window.alert("Este nombre no existe");
+      });
+  };
 
   const handleNextPage = () => {
     setPage((prevPage) => prevPage + 1);
@@ -25,7 +36,7 @@ function App() {
   return (
     <div>
       <div>
-      {pathname !== "/" && <Nav/>}
+        {pathname !== "/" && <Nav onSearch={onSearch} />}
         <Routes>
           <Route path="/" element={<Landing />} />
           <Route path="/home" element={<Cards characters={pokemons} />} />

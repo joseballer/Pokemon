@@ -1,7 +1,7 @@
 .container {
     
     width: 300px;
-    height: auto;
+    height: 450px;
     background-color: #c5c5c5a2;
     padding: 1em;
     border-radius: 10px;
@@ -16,4 +16,7 @@
     color: beige;
   }
   
- 
+ img{
+  margin-left: 75px;
+  
+ }

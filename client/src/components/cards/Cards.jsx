@@ -1,16 +1,19 @@
 import Card from "../card/Card";
+import style from "./Cards.module.css";
+
+
 
 const Cards = ({ characters }) => {
   return (
     <>
-      <div>
+      <div className={style.container}>
         {characters.map((character) => (
           <Card
             key={character.id}
             id={character.id}
             name={character.name}
             image={character.image}
-            type={character.type}
+            types={character.types}
           />
         ))}
       </div>
