@@ -54,13 +54,25 @@ const getPokemons = async (req, res) => {
 const getPokemonByName = async (req, res) => {
   try {
     const { name } = req.query;
-    name.toLowerCase();
-    let pokemon = await Pokemon.findOne({ where: { name } });
+    const nameLower = name.toLowerCase();
+    let pokemon = []
+    pokemon = await Pokemon.findOne({ where: { name: nameLower } });
     if (!pokemon) {
       const response = await axios.get(`${URL}/${name}`);
-      pokemon = response.data;
+      const pokemonAPi = response.data;
+      pokemon = {
+        id: pokemonAPi.id,
+        name: pokemonAPi.name,
+        image:
+          pokemonAPi.sprites?.other?.home?.front_default ||
+          pokemonApi.sprites?.other["official-artwork"]?.front_default,
+        types: pokemonAPi.types.map((type) => {
+          return { id: type.slot, name: type.type.name };
+        }),
+      };
     }
-    res.json(pokemon);
+
+    res.json([pokemon]);
   } catch (err) {
     res.status(500).send(err.message);
   }

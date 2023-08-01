@@ -16,13 +16,20 @@ function App() {
       .then((response) => setPokemons(response.data[0]));
   }, [page]);
 
+
   const onSearch = (name) => {
-    axios(`http://localhost:3001/pokemons?name=${name}`)
-      .then(({ data }) => {
-        setPokemons(data);
+    axios(`http://localhost:3001/pokemon?name=${name}`)
+      .then((response) => {
+        if (response.data.length === 0) {
+          window.alert(`No Pokemon found with the name '${name}'`);
+        } else {
+          setPokemons(response.data);
+        }
       })
-      .catch(() => {
-        window.alert("Este nombre no existe");
+      .catch((error) => {
+        window.alert(
+          `An error occurred while searching for the Pokemon: ${error.message}`
+        );
       });
   };
 
@@ -32,7 +39,17 @@ function App() {
   const handlePrevPage = () => {
     setPage((prevPage) => Math.max(prevPage - 1, 1));
   };
+  const handleFirstPage = () => {
+    setPage(1);
+  };
   const { pathname } = useLocation();
+
+  useEffect(() => {
+    if (pathname === "/home") {
+      setPage(1);
+    }
+  }, [pathname]);
+
   return (
     <div>
       <div>
@@ -44,6 +61,9 @@ function App() {
         </Routes>
       </div>
       <div>
+        {pathname === "/home" && (
+          <button onClick={handleFirstPage}>First Page</button>
+        )}
         {pathname === "/home" && (
           <button onClick={handlePrevPage}>Prev Page</button>
         )}

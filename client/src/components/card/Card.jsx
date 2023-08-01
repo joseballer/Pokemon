@@ -2,7 +2,7 @@ import style from "./Card.module.css";
 import { Link } from "react-router-dom";
 
 const Card = ({ id, name, image, types }) => {
-  console.log(types);
+  
   return (
     <>
       <Link to={`/detail/${id}`}>
