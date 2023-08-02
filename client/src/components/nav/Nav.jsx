@@ -8,6 +8,7 @@ const Nav = ({onSearch}) => {
       <div className={style.linksContainer}>
         <div className={style.link}>
           <Link to="/home">Home</Link>
+          <Link to="/form">Crear Pokemon</Link>
         </div>
         <div>
           <SearchBar onSearch={onSearch} />

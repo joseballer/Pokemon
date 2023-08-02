@@ -5,6 +5,8 @@ import Landing from "./components/landing/landing";
 import Cards from "./components/cards/Cards";
 import Detail from "./components/detail/Detail";
 import Nav from "./components/nav/Nav";
+import Form from "./components/form/Form";
+
 
 function App() {
   const [pokemons, setPokemons] = useState([]);
@@ -58,6 +60,7 @@ function App() {
           <Route path="/" element={<Landing />} />
           <Route path="/home" element={<Cards characters={pokemons} />} />
           <Route path="/detail/:id" element={<Detail />} />
+          <Route path="/form" element={<Form/>}/>
         </Routes>
       </div>
       <div>
