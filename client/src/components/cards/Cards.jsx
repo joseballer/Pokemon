@@ -8,11 +8,11 @@ const Cards = ({ characters }) => {
         <div className={style.cards}>
           {characters.map((character) => (
             <Card
-              key={character.id}
-              id={character.id}
-              name={character.name}
-              image={character.image}
-              types={character.types}
+              key={character.ID}
+              id={character.ID}
+              nombre={character.Nombre}
+              imagen={character.Imagen}
+              // tipo={character.Type}
             />
           ))}
         </div>

@@ -20,7 +20,7 @@ function App() {
 
 
   const onSearch = (name) => {
-    axios(`http://localhost:3001/pokemon?name=${name}`)
+    axios(`http://localhost:3001/pokemons?name=${name}`)
       .then((response) => {
         if (response.data.length === 0) {
           window.alert(`No Pokemon found with the name '${name}'`);

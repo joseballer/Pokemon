@@ -1,20 +1,20 @@
 import style from "./Card.module.css";
 import { Link } from "react-router-dom";
 
-const Card = ({ id, name, image, types }) => {
+const Card = ({ id, nombre, imagen }) => {
   
   return (
     <>
       <Link to={`/detail/${id}`}>
         <div className={style.container}>
-          <h2>{id}</h2>
-          <img src={image} alt="pokemon" width="150px" height="150px" />
-          <h1>{name}</h1>
-          <ul>
-            {types.map((type) => (
-              <li key={type.id}>{type.name}</li>
+          <h2 key={id}>{id}</h2>
+          <img src={imagen} alt="pokemon" width="150px" height="150px" />
+          <h1>{nombre}</h1>
+          {/* <ul>
+            {tipo.map((type) => (
+              <li key={type.ID}>{type.Nombre}</li>
             ))}
-          </ul>
+          </ul> */}
         </div>
       </Link>
     </>

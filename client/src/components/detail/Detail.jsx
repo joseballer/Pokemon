@@ -8,43 +8,29 @@ const Detail = () => {
   const { id } = useParams();
 
   useEffect(() => {
-    axios(`${URL}/${id}`).then((response) => {
-      if (response.data.name) {
-        setCharacter(response.data);
-      } else {
-        window.alert("No characters with that ID");
-      }
+    axios(`${URL}/${id}`).then(({ data }) => {
+      if (data.ID) {
+        setCharacter(data);
+      } 
     });
   }, [id]);
-
   return (
     <div className={style.container}>
       <div className={style.titulo}>
-        <h2>{character.id}</h2>
-        <h1>{character.name}</h1>
-        <img
-          className={style.img}
-          src={
-            character.sprites?.other?.home?.front_default ||
-            character.sprites?.other["official-artwork"]?.front_default
-          }
-          alt={character.name}
-        />
+        <h2>{character.ID}</h2>
+        <h1>{character.Nombre}</h1>
+        <img className={style.img} src={character.Imagen} alt={character.Nombre} />
       </div>
       <div className={style.stats}>
         <h1>Stats</h1>
-        <h2>Health: {character.stats?.[0]?.base_stat}</h2>
-        <h2>Attack: {character.stats?.[1]?.base_stat}</h2>
-        <h2>Defense: {character.stats?.[2]?.base_stat}</h2>
-        <h2>Speed: {character.stats?.[5]?.base_stat}</h2>
-        <h2>Height: {character.height}</h2>
-        <h2>Weight: {character.weight}</h2>
-        <h2> Type: </h2>
-        <ul>
-          {character.types?.map((type) => (
-            <li key={type.slot}><h2>{type.type.name}</h2></li>
-          ))}
-        </ul>
+        <h2>Vida: {character.Vida}</h2>
+        <h2>Ataque: {character.Ataque}</h2>
+        <h2>Defensa: {character.Defensa}</h2>
+        <h2>Velocidad: {character.Velocidad}</h2>
+        <h2>Altura: {character.Altura}</h2>
+        <h2>Peso: {character.Peso}</h2>
+        {/* <h2>Tipo: </h2>
+        <h2>{character.Type}</h2> */}
       </div>
     </div>
   );
