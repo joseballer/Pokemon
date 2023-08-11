@@ -11,7 +11,7 @@ const Detail = () => {
     axios(`${URL}/${id}`).then(({ data }) => {
       if (data.ID) {
         setCharacter(data);
-      } 
+      }
     });
   }, [id]);
   return (
@@ -19,7 +19,11 @@ const Detail = () => {
       <div className={style.titulo}>
         <h2>{character.ID}</h2>
         <h1>{character.Nombre}</h1>
-        <img className={style.img} src={character.Imagen} alt={character.Nombre} />
+        <img
+          className={style.img}
+          src={character.Imagen}
+          alt={character.Nombre}
+        />
       </div>
       <div className={style.stats}>
         <h1>Stats</h1>
@@ -29,8 +33,12 @@ const Detail = () => {
         <h2>Velocidad: {character.Velocidad}</h2>
         <h2>Altura: {character.Altura}</h2>
         <h2>Peso: {character.Peso}</h2>
-        {/* <h2>Tipo: </h2>
-        <h2>{character.Type}</h2> */}
+        <h2>Tipo: </h2>
+        <ul>
+          {character.Type.map((type) => (
+            <li>{type.Nombre}</li>
+          ))}
+        </ul>
       </div>
     </div>
   );

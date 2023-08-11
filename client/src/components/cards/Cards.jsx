@@ -12,7 +12,7 @@ const Cards = ({ characters }) => {
               id={character.ID}
               nombre={character.Nombre}
               imagen={character.Imagen}
-              // tipo={character.Type}
+              types={character.Type}
             />
           ))}
         </div>
