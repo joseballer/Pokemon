@@ -35,9 +35,12 @@ const Detail = () => {
         <h2>Peso: {character.Peso}</h2>
         <h2>Tipo: </h2>
         <ul>
-          {character.Type.map((type) => (
+          {/* {character.Type.map((type) => (
             <li>{type.Nombre}</li>
-          ))}
+          ))} */}
+          {character.Type && Array.isArray(character.Type) ? character.Type.map((type) => (
+            <li>{type.Nombre}</li>
+          )) : null}
         </ul>
       </div>
     </div>
