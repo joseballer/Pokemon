@@ -1,7 +1,6 @@
 import {  FILTER, ORDER } from "./actions";
 
 const initialState = {
-  myFavorites: [],
   allCharacters: [],
 };
 

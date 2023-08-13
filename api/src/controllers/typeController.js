@@ -1,5 +1,6 @@
 const axios = require("axios");
 const { Type } = require("../db");
+const { getPokemonById } = require("./pokemonController");
 
 const getAllTypes = async () => {
   let allTypes = await Type.findAll();
@@ -13,7 +14,28 @@ const getAllTypes = async () => {
   return allTypes;
 };
 
-module.exports = { getAllTypes };
+
+const getPokemonByType = async (type) => {
+  const response = await axios.get("https://pokeapi.co/api/v2/type");
+  const allTypes = response.data.results;
+  const typeObject = allTypes.find((t) => t.name === type);
+  if (typeObject) {
+      const pokemonResponse = await axios.get(typeObject.url);
+      const pokemonURLArray = pokemonResponse.data.pokemon
+      const allPokemonsByType = await Promise.all(
+        pokemonURLArray.map(async (element) => {
+          const id = element.pokemon.url.split('/').slice(-2, -1)[0]
+          const apiPokemon = await getPokemonById(id)
+          return apiPokemon
+        })
+      )
+    
+      return [...allPokemonsByType]
+  }
+};
+
+
+module.exports = { getAllTypes, getPokemonByType };
 
 // const typesLocal = []
 

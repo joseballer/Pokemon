@@ -47,14 +47,14 @@ const getPokemons = async (page) => {
   return pokemons;
 };
 
-const getPokemonByName = async (name) => {
 
+const getPokemonByName = async (name) => {
   const nameLower = name.toLowerCase();
   let pokemon = [];
   pokemon = await Pokemon.findOne({ where: { Nombre: nameLower } });
   if (!pokemon) {
     const response = await axios.get(`${URL}/${nameLower}`);
-    const { id, name, sprites, stats, height, weight, types  } = response.data;
+    const { id, name, sprites, stats, height, weight, types } = response.data;
     pokemon = {
       ID: id,
       Nombre: name,
@@ -71,7 +71,6 @@ const getPokemonByName = async (name) => {
         return { Nombre: type.type.name };
       }),
     };
-   
   }
   return [pokemon];
 };
