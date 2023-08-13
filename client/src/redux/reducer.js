@@ -1,33 +1,32 @@
-import {  FILTER, ORDER } from "./actions";
-
 const initialState = {
-  allCharacters: [],
+  types: [],
+  loading: false,
+  error: null
 };
 
-const rootReducer = (state = initialState, { type, payload }) => {
-  switch (type) {
-    
-    case FILTER:
-      const filterByGender = state.allCharacters.filter(
-        (char) => char.gender === payload
-      );
+const reducer = (state = initialState, action) => {
+  switch (action.type) {
+    case 'FETCH_TYPES_REQUEST':
       return {
         ...state,
-        myFavorites: payload === "All" ? state.allCharacters : filterByGender,
+        loading: true,
+        error: null
       };
-    case ORDER:
-      const orderById = [...state.allCharacters];
-
+    case 'FETCH_TYPES_SUCCESS':
       return {
         ...state,
-        myFavorites:
-          payload === "A"
-            ? orderById.sort((a, b) => a.id - b.id)
-            : orderById.sort((a, b) => b.id - a.id),
+        loading: false,
+        types: action.payload
+      };
+    case 'FETCH_TYPES_FAILURE':
+      return {
+        ...state,
+        loading: false,
+        error: action.payload
       };
     default:
       return state;
   }
 };
 
-export default rootReducer;
+export default reducer;
