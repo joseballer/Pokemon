@@ -1,16 +1,20 @@
 import axios from 'axios';
 
-export const fetchTypes = (type) => async (dispatch) => {
-  dispatch({ type: 'FETCH_TYPES_REQUEST' });
-  try {
-    const response = await axios.get(`http://localhost:3001/types?type=${type}`);
-    dispatch({ type: 'FETCH_TYPES_SUCCESS', payload: response.data });
-  } catch (error) {
-    dispatch({ type: 'FETCH_TYPES_FAILURE', payload: error.message });
-  }
-};
+export const GET_POKEMON = 'GET_POKEMON';
+export const GET_POKEMON_BY_TYPES = 'GET_POKEMON_BY_TYPES';
 
-export const setFilter = (filter) => ({
-  type: 'SET_FILTER',
-  filter
-});
+export const getPokemons = (page) => {
+  return async (dispatch) => {
+    const pokemons = await axios.get(`http://localhost:3001/pokemons?page=${page}`);
+    dispatch({ type: GET_POKEMON, payload: pokemons.data });
+  };
+
+}
+
+export const getPokemonByTypes = (type) => {
+  return async (dispatch) => {
+    const pokemons = await axios.get(`http://localhost:3001/type?type=${type}`);
+    dispatch({ type: GET_POKEMON_BY_TYPES, payload: pokemons.data });
+  };
+
+}

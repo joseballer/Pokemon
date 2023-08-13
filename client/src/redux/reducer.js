@@ -1,32 +1,26 @@
-const initialState = {
-  types: [],
-  loading: false,
-  error: null
-};
+import { GET_POKEMON, GET_POKEMON_BY_TYPES } from "./actions";
 
+const initialState = {
+  pokemons :[],
+ 
+  
+};
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'FETCH_TYPES_REQUEST':
+    case GET_POKEMON:
       return {
         ...state,
-        loading: true,
-        error: null
+        pokemons: action.payload,
       };
-    case 'FETCH_TYPES_SUCCESS':
+    case GET_POKEMON_BY_TYPES:
       return {
         ...state,
-        loading: false,
-        types: action.payload
-      };
-    case 'FETCH_TYPES_FAILURE':
-      return {
-        ...state,
-        loading: false,
-        error: action.payload
+        pokemons: action.payload,
       };
     default:
       return state;
   }
-};
+
+}
 
 export default reducer;
