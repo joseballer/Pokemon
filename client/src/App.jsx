@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { Routes, Route, useLocation } from "react-router-dom";
-import Landing from "./components/landing/landing";
-import Cards from "./components/cards/Cards";
-import Detail from "./components/detail/Detail";
+import Landing from "./views/landing/landing";
+import Detail from "./views/detail/Detail";
 import Nav from "./components/nav/Nav";
-import Form from "./components/form/Form";
+import Form from "./views/form/Form";
+import Home from "./views/home/home";
 
 
 function App() {
@@ -58,7 +58,7 @@ function App() {
         {pathname !== "/" && <Nav onSearch={onSearch} />}
         <Routes>
           <Route path="/" element={<Landing />} />
-          <Route path="/home" element={<Cards characters={pokemons} />} />
+          <Route path="/home" element={<Home characters={pokemons} />} />
           <Route path="/detail/:id" element={<Detail />} />
           <Route path="/form" element={<Form/>}/>
         </Routes>

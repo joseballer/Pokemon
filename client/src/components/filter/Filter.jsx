@@ -1,23 +1,15 @@
 
-import { useSelector, useDispatch } from 'react-redux';
-import { setFilter, fetchTypes} from '../../redux/actions';
+
 
 
 
 const Filter = () => {
-  const dispatch = useDispatch();
-  const filter = useSelector(state => state.filter);
-
-  const handleChange = (event) => {
-    dispatch(setFilter(event.target.value));
-    if (event.target.value !== 'all') {
-      dispatch(fetchTypes(event.target.value));
-    }
-  }
+  
+  
   
 
   return (
-    <select value={filter} onChange={handleChange}>
+    <select value='filter'>
       <option value="all">Todos</option>
       <option value="normal">Normal</option>
       <option value="fighting">Lucha</option>
