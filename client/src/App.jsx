@@ -1,38 +1,27 @@
+import { useDispatch, useSelector } from 'react-redux';
 import { useState, useEffect } from "react";
-import axios from "axios";
 import { Routes, Route, useLocation } from "react-router-dom";
 import Landing from "./views/landing/landing";
 import Detail from "./views/detail/Detail";
 import Nav from "./components/nav/Nav";
 import Form from "./views/form/Form";
 import Home from "./views/home/home";
+import { getPokemons , searchPokemon} from "./redux/actions";
 
 
 function App() {
-  const [pokemons, setPokemons] = useState([]);
   const [page, setPage] = useState(1);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    axios
-      .get(`http://localhost:3001/pokemons?page=${page}`)
-      .then((response) => setPokemons(response.data[0]));
+    dispatch(getPokemons(page));
   }, [page]);
 
-
+  useSelector((state) => state.pokemons)
+  
+  
   const onSearch = (name) => {
-    axios(`http://localhost:3001/pokemons?name=${name}`)
-      .then((response) => {
-        if (response.data.length === 0) {
-          window.alert(`No Pokemon found with the name '${name}'`);
-        } else {
-          setPokemons(response.data);
-        }
-      })
-      .catch((error) => {
-        window.alert(
-          `An error occurred while searching for the Pokemon: ${error.message}`
-        );
-      });
+    dispatch(searchPokemon(name));
   };
 
   const handleNextPage = () => {
@@ -58,7 +47,7 @@ function App() {
         {pathname !== "/" && <Nav onSearch={onSearch} />}
         <Routes>
           <Route path="/" element={<Landing />} />
-          <Route path="/home" element={<Home characters={pokemons} />} />
+          <Route path="/home" element={<Home />} />
           <Route path="/detail/:id" element={<Detail />} />
           <Route path="/form" element={<Form/>}/>
         </Routes>

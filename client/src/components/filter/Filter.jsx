@@ -1,15 +1,19 @@
-
-
-
-
+import { useDispatch } from "react-redux";
+import { getPokemonByTypes, getPokemons } from "../../redux/actions";
 
 const Filter = () => {
-  
-  
-  
+  const dispatch = useDispatch();
 
+  const handleChange = (event) => {
+    const type = event.target.value;
+    if (type === "all") {
+      dispatch(getPokemons(1));
+    } else {
+      dispatch(getPokemonByTypes(type));
+    }
+  };
   return (
-    <select value='filter'>
+    <select onChange={handleChange}>
       <option value="all">Todos</option>
       <option value="normal">Normal</option>
       <option value="fighting">Lucha</option>
@@ -33,6 +37,6 @@ const Filter = () => {
       <option value="shadow">Sombra</option>
     </select>
   );
-}
+};
 
 export default Filter;
